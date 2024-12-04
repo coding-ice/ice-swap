@@ -1,9 +1,7 @@
-// 'use client';
-
 import { Space } from 'antd';
-import dayjs from 'dayjs';
 
 import SidebarNoteItem from './SidebarNoteItem';
+import { getAllNotes } from '@/lib/redis';
 
 export interface Note {
   title: string;
@@ -11,11 +9,12 @@ export interface Note {
   updateTime: string;
 }
 
-interface SidebarNoteListProps {
-  notes: Record<string, string>;
-}
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-const SidebarNoteList: React.FC<SidebarNoteListProps> = ({ notes }) => {
+const SidebarNoteList: React.FC = async () => {
+  await sleep(1000 * 5);
+  const notes = await getAllNotes();
+
   const arr = Object.entries(notes);
   if (arr.length === 0) {
     return <div>No notes</div>;

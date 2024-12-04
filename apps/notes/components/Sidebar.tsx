@@ -1,14 +1,14 @@
+import { Suspense } from 'react';
 import { Flex } from 'antd';
 import Link from 'next/link';
 
+import CustomButton from './CustomButton';
 import SidebarNoteList from './SidebarNoteList';
-import { getAllNotes } from '@/lib/redis';
+import SidebarNoteListSkeleton from './SidebarNoteListSkeleton';
 
 interface SideBarProps {}
 
-const SideBar: React.FC<SideBarProps> = async () => {
-  const notes = await getAllNotes();
-
+const SideBar: React.FC<SideBarProps> = () => {
   return (
     <Flex vertical className="sidebar" gap={30} style={{ width: 280, borderRight: '1px solid #ccc', padding: 30 }}>
       <Link href={'/'} className="link--unstyled">
@@ -19,9 +19,12 @@ const SideBar: React.FC<SideBarProps> = async () => {
       </Link>
       <section className="sidebar-menu" role="menubar">
         {/* SideSearchField */}
+        <CustomButton>New</CustomButton>
       </section>
       <nav>
-        <SidebarNoteList notes={notes} />
+        <Suspense fallback={<SidebarNoteListSkeleton />}>
+          <SidebarNoteList />
+        </Suspense>
       </nav>
     </Flex>
   );
