@@ -3,6 +3,7 @@
 import { PropsWithChildren, useState } from 'react';
 import { Flex } from 'antd';
 import { createStyles } from 'antd-style';
+import Link from 'next/link';
 
 interface SidebarNoteItemContentProps extends PropsWithChildren {
   id: string;
@@ -37,27 +38,30 @@ const useStyle = createStyles(({ css }) => {
   };
 });
 
-const SidebarNoteItemContent: React.FC<SidebarNoteItemContentProps> = ({ children, expandedChildren }) => {
+const SidebarNoteItemContent: React.FC<SidebarNoteItemContentProps> = ({ id, children, expandedChildren }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { styles, cx } = useStyle();
 
   return (
-    <Flex gap={10} vertical className={styles.wrapper}>
-      {children}
-      <Flex
-        component="button"
-        className="sidebar-note-toggle-expand"
-        justify="center"
-        align="center"
-        onClick={e => {
-          e.stopPropagation();
-          setIsExpanded(!isExpanded);
-        }}
-      >
-        <img className={cx('arrow', { rotate: isExpanded })} src="/arrow.svg" />
+    <Link href={`/note/${id}`}>
+      <Flex gap={10} vertical className={styles.wrapper}>
+        {children}
+        <Flex
+          component="button"
+          className="sidebar-note-toggle-expand"
+          justify="center"
+          align="center"
+          onClick={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            setIsExpanded(!isExpanded);
+          }}
+        >
+          <img className={cx('arrow', { rotate: isExpanded })} src="/arrow.svg" />
+        </Flex>
+        {isExpanded && expandedChildren}
       </Flex>
-      {isExpanded && expandedChildren}
-    </Flex>
+    </Link>
   );
 };
 

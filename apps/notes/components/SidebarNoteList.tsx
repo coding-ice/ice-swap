@@ -2,6 +2,7 @@ import { Space } from 'antd';
 
 import SidebarNoteItem from './SidebarNoteItem';
 import { getAllNotes } from '@/lib/redis';
+import { sleep } from '@/utils';
 
 export interface Note {
   title: string;
@@ -9,10 +10,8 @@ export interface Note {
   updateTime: string;
 }
 
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
 const SidebarNoteList: React.FC = async () => {
-  await sleep(1000 * 5);
+  await sleep(1000);
   const notes = await getAllNotes();
 
   const arr = Object.entries(notes);
