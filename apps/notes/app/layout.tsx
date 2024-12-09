@@ -14,6 +14,8 @@ const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700'],
 });
 
+export const dynamic = 'force-dynamic';
+
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en" className={poppins.className}>

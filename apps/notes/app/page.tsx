@@ -1,5 +1,3 @@
-import { red } from './actions';
-
 export default function Home() {
   return (
     <div className="note-empty-state">

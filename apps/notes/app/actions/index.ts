@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import type { Note } from '@/components/SidebarNoteList';
@@ -15,15 +16,13 @@ async function saveNote(note: Omit<Note, 'updateTime'>, noteId?: string) {
 
   if (!noteId) {
     const key = await addNote(data);
+    // revalidatePath('/', 'layout');
     redirect(`/note/${key}`);
   } else {
     await updateNote(noteId, data);
+    // revalidatePath('/', 'layout');
     redirect(`/note/${noteId}`);
   }
 }
 
-async function red() {
-  redirect('/');
-}
-
-export { deleteNote, saveNote, red };
+export { deleteNote, saveNote };
