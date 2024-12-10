@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormStatus } from 'react-dom';
 import { Button, Flex, Input } from 'antd';
 import { createStyles } from 'antd-style';
 import { useRouter } from 'next/navigation';
@@ -68,7 +68,8 @@ const NoteEditor: React.FC<NoteEditorProps> = ({ noteId, initialBody, initialTit
             PREVIEW
           </Button>
           <h3 style={{ fontSize: 30 }}>{title}</h3>
-          <NotePreview>{body}</NotePreview>
+          {/* 因为被导入到客户端中：该组件就会被的依赖，就会被视为bound的一部分 */}
+          <NotePreview>{body}</NotePreview> 
         </Flex>
       </Flex>
     </Flex>

@@ -16,11 +16,11 @@ async function saveNote(note: Omit<Note, 'updateTime'>, noteId?: string) {
 
   if (!noteId) {
     const key = await addNote(data);
-    // revalidatePath('/', 'layout');
-    redirect(`/note/${key}`);
+    revalidatePath('/', 'layout');
+    redirect(`/note/${key}`); // 发送 post（303） 请求，跳转到新建的笔记页面 -> 此时页面的数据是最新的
   } else {
     await updateNote(noteId, data);
-    // revalidatePath('/', 'layout');
+    revalidatePath('/', 'layout');
     redirect(`/note/${noteId}`);
   }
 }
