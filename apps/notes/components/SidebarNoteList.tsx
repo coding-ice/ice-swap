@@ -1,6 +1,8 @@
 import { Space } from 'antd';
 
 import SidebarNoteItem from './SidebarNoteItem';
+import SidebarNoteItemHeader from './SidebarNoteItemHeader';
+import SidebarNoteListFilter from './SidebarNoteListFilter';
 import { getAllNotes } from '@/lib/redis';
 
 export interface Note {
@@ -13,17 +15,23 @@ const SidebarNoteList: React.FC = async () => {
   const notes = await getAllNotes();
 
   const arr = Object.entries(notes);
-  if (arr.length === 0) {
-    return <div>No notes</div>;
-  }
 
+  // return (
+  //   <SidebarNoteListFilter
+  //     notes={arr.map(([key, note]) => {
+  //       return {};
+  //     })}
+  //   ></SidebarNoteListFilter>
+  // );
+
+  // 1. 方案一，通过 children，然后在客户端组件中过滤（提前渲染，避免吧依赖注入到客户端中）
   return (
-    <Space size={15} direction="vertical" className="notes w-full">
-      {arr.map(([id, note]) => {
-        const parseNote = JSON.parse(note) as Note;
-        return <SidebarNoteItem id={id} key={id} {...parseNote} />;
+    <SidebarNoteListFilter>
+      {arr.map(([idx, note]) => {
+        const parsedNote = JSON.parse(note);
+        return <SidebarNoteItem key={idx} id={idx} note={parsedNote} />;
       })}
-    </Space>
+    </SidebarNoteListFilter>
   );
 };
 

@@ -5,9 +5,12 @@ import { Flex } from 'antd';
 import { createStyles } from 'antd-style';
 import Link from 'next/link';
 
+import { Note } from './SidebarNoteList';
+
 interface SidebarNoteItemContentProps extends PropsWithChildren {
   id: string;
   expandedChildren: React.ReactNode;
+  note: Note;
 }
 
 const useStyle = createStyles(({ css }) => {

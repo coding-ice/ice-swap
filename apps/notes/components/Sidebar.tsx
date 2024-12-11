@@ -1,10 +1,11 @@
 import { Suspense } from 'react';
-import { Flex } from 'antd';
+import { Flex, Input } from 'antd';
 import Link from 'next/link';
 
 import CustomButton from './CustomButton';
 import SidebarNoteList from './SidebarNoteList';
 import SidebarNoteListSkeleton from './SidebarNoteListSkeleton';
+import SideSearchField from './SideSearchField';
 
 interface SideBarProps {}
 
@@ -17,10 +18,10 @@ const SideBar: React.FC<SideBarProps> = () => {
           <strong style={{ fontSize: 28 }}>React Notes</strong>
         </Flex>
       </Link>
-      <section className="sidebar-menu" role="menubar">
-        {/* SideSearchField */}
+      <Flex gap={20} className="sidebar-menu" role="menubar">
+        <SideSearchField />
         <CustomButton>New</CustomButton>
-      </section>
+      </Flex>
       <nav>
         <Suspense fallback={<SidebarNoteListSkeleton />}>
           <SidebarNoteList />
