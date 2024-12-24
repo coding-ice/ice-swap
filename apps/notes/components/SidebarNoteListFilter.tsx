@@ -34,7 +34,7 @@ const SidebarNoteListFilter: React.FC<SidebarNoteListFilterProps> = ({ notes }) 
   // 方案二： 通过传递的notes进行过滤
 
   return (
-    <Space direction="vertical" size={10}>
+    <Space direction="vertical" size={10} style={{ width: '100%' }}>
       {notes.map(({ noteId, note, header }) => {
         if (!note.title.includes(search)) {
           return null;
