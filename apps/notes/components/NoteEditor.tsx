@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import DeleteButton from './DeleteButton';
 import NotePreview from './NotePreview';
 import SaveButtion from './SaveButtion';
-import { deleteNote, saveNote } from '@/app/actions';
+import { deleteNote, saveNote } from '@/app/[lng]/actions';
 
 interface NoteEditorProps {
   initialTitle: string;

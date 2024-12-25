@@ -12,11 +12,13 @@
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.0.1",
+    "@formatjs/intl-localematcher": "^0.5.9",
     "antd": "^5.21.6",
     "antd-style": "^3.7.1",
     "dayjs": "^1.11.13",
     "ioredis": "^5.4.1",
     "marked": "^15.0.3",
+    "negotiator": "^1.0.0",
     "next": "14.2.16",
     "react": "^18",
     "react-dom": "^18",
@@ -25,6 +27,7 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
+    "@types/negotiator": "^0.6.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
