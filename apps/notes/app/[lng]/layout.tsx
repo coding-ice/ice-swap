@@ -14,11 +14,15 @@ const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700'],
 });
 
-// export const dynamic = 'force-dynamic';
+interface RootLayoutProps extends PropsWithChildren {
+  params: {
+    lng: string;
+  };
+}
 
-export default function RootLayout({ children }: PropsWithChildren) {
+export default function RootLayout({ children, params: { lng } }: RootLayoutProps) {
   return (
-    <html lang="en" className={poppins.className}>
+    <html lang={lng} className={poppins.className}>
       <body>
         <StyleRegistry>
           <AntdRegistry>

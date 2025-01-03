@@ -1,8 +1,11 @@
 import { match } from '@formatjs/intl-localematcher';
 import Negotiator from 'negotiator';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 import { defaultLocale, locales } from '@/config';
+
+const publicReg = /\.(.*)$/;
+const excludeFile = ['logo.svg'];
 
 function getLocale(request: NextRequest) {
   const headers = { 'accept-language': request.headers.get('accept-language') || '' };
@@ -12,15 +15,22 @@ function getLocale(request: NextRequest) {
 }
 
 export default function middleware(request: NextRequest) {
+  const locale = getLocale(request);
   const { pathname } = request.nextUrl;
   const hasLocalePath = locales.some(locale => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`);
 
   if (hasLocalePath) return;
-
-  const locale = getLocale(request);
   request.nextUrl.pathname = `/${locale}${pathname}`;
 
-  return Response.redirect(request.nextUrl);
+  if (publicReg.test(pathname) && !excludeFile.includes(pathname.slice(1))) return;
+
+  if (locale === defaultLocale) {
+    // 重写 /
+    return NextResponse.rewrite(request.nextUrl);
+  }
+
+  // 重定向 / => /zh
+  return NextResponse.redirect(request.nextUrl);
 }
 
 export const config = {
