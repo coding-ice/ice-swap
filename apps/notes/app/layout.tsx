@@ -7,6 +7,7 @@ import './globals.css';
 import { Flex } from 'antd';
 
 import StyleRegistry from './StyleRegistry';
+import Header from '@/components/Header';
 import SideBar from '@/components/Sidebar';
 
 const poppins = Poppins({
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
               <Flex className="main" style={{ height: '100%' }}>
                 <SideBar />
                 <section className="note-viewer" style={{ flex: 1, background: 'rgb(246, 247, 250)', padding: 30 }}>
+                  <Header />
                   {children}
                 </section>
               </Flex>
