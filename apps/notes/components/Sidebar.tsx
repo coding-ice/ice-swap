@@ -6,6 +6,7 @@ import CustomButton from './CustomButton';
 import SidebarNoteList from './SidebarNoteList';
 import SidebarNoteListSkeleton from './SidebarNoteListSkeleton';
 import SideSearchField from './SideSearchField';
+import SoderbarImportant from './SoderbarImportant';
 
 interface SideBarProps {}
 
@@ -27,6 +28,7 @@ const SideBar: React.FC<SideBarProps> = () => {
           <SidebarNoteList />
         </Suspense>
       </nav>
+      <SoderbarImportant />
     </Flex>
   );
 };
