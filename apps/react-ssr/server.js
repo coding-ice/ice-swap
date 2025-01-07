@@ -121,7 +121,7 @@ app.get(/.*/, async (req, res) => {
             props: propsObj,
             page,
           })}</script>
-          <script src="/index.client.js" />
+          <script src="/index.client.js"></script>
         </body>
       </html>
     `);
