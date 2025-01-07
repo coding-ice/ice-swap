@@ -1,6 +1,7 @@
-import express from "express";
+import express, { json } from "express";
 import { renderToString } from "react-dom/server";
-import App from "./page/index";
+import path from "path";
+import fs from "fs";
 
 const app = express();
 
@@ -39,24 +40,94 @@ const app = express();
 //   `);
 // });
 
-// 3. 渲染两遍，第一次返回字符串，第二次返回水合后的内容， 服务端/客户端 各自一次
-const content = renderToString(<App />);
+// 3. 最终渲染
+// const content = renderToString(<App />);
+// app.use(express.static("public"));
+// app.get("/", async (req, res) => {
+//   res.send(`
+//     <!DOCTYPE html>
+//     <html>
+//       <head>
+//         <title>React SSR</title>
+//       </head>
+//       <body>
+//         <div id="root">
+//           ${content}
+//         </div>
+//         <script src="/index.js"></script>
+//       </body>
+//     </html>
+//   `);
+// });
+
+// 4. 使用 getServerSideProps 获取数据, __INITIAL_DATA__ -> 需要给客户端注入相同的数据
+// app.get("/", async (req, res) => {
+//   const file = await import("./pages/cat.js");
+//   let propsObj = {};
+//   if (file.getServerSideProps) {
+//     const { props } = await file.getServerSideProps();
+//     propsObj = props;
+//   }
+
+//   const Component = file.default;
+//   const content = renderToString(<Component {...propsObj} />);
+
+//   res.send(`
+//     <!DOCTYPE html>
+//     <html>
+//       <head>
+//         <title>React SSR</title>
+//       </head>
+//       <body>
+//         <div id="root">${content}</div>
+//         <script>window.__INITIAL_DATA__ = ${JSON.stringify(propsObj)}</script>
+//         <script src="/index.js" />
+//       </body>
+//     </html>
+//   `);
+// });
+
+// 5. 利用文件系统实现路由的切换，渲染对应的组建
 app.use(express.static("public"));
-app.get("/", (req, res) => {
-  res.send(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>React SSR</title>
-      </head>
-      <body>
-        <div id="root">
-          ${content}
-        </div>
-        <script src="/index.js"></script>
-      </body>
-    </html>
-  `);
+
+const pagesDir = path.join(process.cwd() + "/pages");
+const pages = fs.readdirSync(pagesDir).map((page) => page.replace(".js", ""));
+
+app.get(/.*/, async (req, res) => {
+  const path = req.path.replace("/", "");
+  const page = path ? path : "index";
+
+  if (pages.includes(page)) {
+    const file = await import(`./pages/${page}.js`);
+    const Component = file.default;
+    let propsObj = {};
+
+    if (file.getServerSideProps) {
+      const { props } = await file.getServerSideProps();
+      propsObj = props;
+    }
+
+    const content = renderToString(<Component {...propsObj} />);
+
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>React SSR</title>
+        </head>
+        <body>
+          <div id="root">${content}</div>
+          <script>window.__INITIAL_DATA__ = ${JSON.stringify({
+            props: propsObj,
+            page,
+          })}</script>
+          <script src="/index.client.js" />
+        </body>
+      </html>
+    `);
+  } else {
+    res.send(`<h1>404</h1>`);
+  }
 });
 
 app.listen(3000, () => {

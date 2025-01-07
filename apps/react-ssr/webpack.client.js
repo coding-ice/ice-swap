@@ -1,10 +1,10 @@
 const path = require("path");
 
 module.exports = {
-  mode: "production",
+  mode: "development",
   entry: "./client.js",
   output: {
-    filename: "index.js",
+    filename: "index.client.js",
     path: path.resolve(__dirname, "public"),
   },
   module: {
