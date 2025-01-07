@@ -108,6 +108,7 @@ app.get(/.*/, async (req, res) => {
     }
 
     const content = renderToString(<Component {...propsObj} />);
+    console.log(content, "content");
 
     res.send(`
       <!DOCTYPE html>
