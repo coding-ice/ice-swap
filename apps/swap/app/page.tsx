@@ -1,9 +1,5 @@
-import styles from "./page.module.css";
+const Swap: React.FC = () => {
+  return <div>Swap</div>;
+};
 
-export default function Home() {
-  return (
-    <div className={styles.page}>
-      <h1>Swap</h1>
-    </div>
-  );
-}
+export default Swap;
