@@ -217,6 +217,9 @@ importers:
       '@ant-design/web3':
         specifier: ^1.20.0
         version: 1.20.0(antd@5.22.3(date-fns@2.30.0)(luxon@3.5.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@ant-design/web3-assets':
+        specifier: ^1.11.7
+        version: 1.11.7(antd@5.22.3(date-fns@2.30.0)(luxon@3.5.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@ant-design/web3-wagmi':
         specifier: ^2.10.0
         version: 2.10.0(@tanstack/react-query@5.66.0(react@18.3.1))(antd@5.22.3(date-fns@2.30.0)(luxon@3.5.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(viem@2.22.21(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.1))(wagmi@2.14.9(@tanstack/query-core@5.66.0)(@tanstack/react-query@5.66.0(react@18.3.1))(@types/react@18.3.1)(bufferutil@4.0.9)(immer@10.0.2)(react@18.3.1)(typescript@5.5.4)(utf-8-validate@5.0.10)(viem@2.22.21(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.1))(zod@3.24.1))
