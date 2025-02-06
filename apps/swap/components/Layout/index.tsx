@@ -1,3 +1,4 @@
+import { Flex } from "antd";
 import Header from "./Header";
 
 interface LayoutProps {
@@ -6,10 +7,10 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div>
+    <Flex vertical style={{ minHeight: "100vh" }}>
       <Header />
-      {children}
-    </div>
+      <main style={{ flex: 1, padding: "20px" }}>{children}</main>
+    </Flex>
   );
 };
 
