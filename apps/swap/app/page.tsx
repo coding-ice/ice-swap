@@ -8,11 +8,6 @@ import { SwapOutlined } from "@ant-design/icons";
 const useStyle = createStyles(({ css }) => ({
   wrapper: css`
     width: 600px;
-    margin: 0 auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%);
   `,
   body: css`
     display: flex;
