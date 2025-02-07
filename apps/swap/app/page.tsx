@@ -41,42 +41,55 @@ const Swap: React.FC = () => {
   };
 
   return (
-    <Card className={styles.wrapper} classNames={{ body: styles.body }}>
-      <Card>
-        <Input
-          variant="borderless"
-          type="number"
-          addonAfter={<TokenSelect value={tokenA} options={optionsA} />}
-          value={amountA}
-          onChange={(e) => setAmountA(parseFloat(e.target.value))}
-        />
-        <Space>
-          <span className="price">$ 0.0</span>
-          <span className="banance">Balance: 0</span>
-          <Button type="link" size="small" onClick={handleMax}>
-            Max
-          </Button>
-        </Space>
+    <div
+      style={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%,-50%)",
+      }}
+    >
+      <Card className={styles.wrapper} classNames={{ body: styles.body }}>
+        <Card>
+          <Input
+            variant="borderless"
+            type="number"
+            addonAfter={<TokenSelect value={tokenA} options={optionsA} />}
+            value={amountA}
+            onChange={(e) => setAmountA(parseFloat(e.target.value))}
+          />
+          <Space>
+            <span className="price">$ 0.0</span>
+            <span className="banance">Balance: 0</span>
+            <Button type="link" size="small" onClick={handleMax}>
+              Max
+            </Button>
+          </Space>
+        </Card>
+        <Flex justify="center">
+          <Button
+            shape="circle"
+            icon={<SwapOutlined />}
+            onClick={handleSwitch}
+          />
+        </Flex>
+        <Card>
+          <Input
+            variant="borderless"
+            type="number"
+            addonAfter={<TokenSelect value={tokenB} options={optionsB} />}
+            value={amountB}
+          />
+          <Space>
+            <span className="price">$ 0.0</span>
+            <span className="banance">Balance: 0</span>
+          </Space>
+        </Card>
+        <Button type="primary" block>
+          Swap
+        </Button>
       </Card>
-      <Flex justify="center">
-        <Button shape="circle" icon={<SwapOutlined />} onClick={handleSwitch} />
-      </Flex>
-      <Card>
-        <Input
-          variant="borderless"
-          type="number"
-          addonAfter={<TokenSelect value={tokenB} options={optionsB} />}
-          value={amountB}
-        />
-        <Space>
-          <span className="price">$ 0.0</span>
-          <span className="banance">Balance: 0</span>
-        </Space>
-      </Card>
-      <Button type="primary" block>
-        Swap
-      </Button>
-    </Card>
+    </div>
   );
 };
 

@@ -9,13 +9,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <Flex vertical style={{ minHeight: "100vh" }}>
       <Header />
-      <Flex
-        justify="center"
-        align="center"
-        style={{ flex: 1, padding: "20px" }}
-      >
+      <div style={{ flex: 1, padding: "20px", position: "relative" }}>
         {children}
-      </Flex>
+      </div>
     </Flex>
   );
 };

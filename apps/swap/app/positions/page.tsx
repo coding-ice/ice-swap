@@ -2,10 +2,11 @@
 
 import { Button, Flex, Space, Table, Typography } from "antd";
 import { createStyles } from "antd-style";
-import Link from "next/link";
 import { columns, data } from "./mockData";
+import AddPositionModal, {
+  type CreatePositionParams,
+} from "./AddPositionModal";
 import { useState } from "react";
-import AddPoolModal, { type CreatePoolParams } from "./AddPoolModal";
 
 const useStyle = createStyles(({ css }) => ({
   pool: css`
@@ -15,20 +16,19 @@ const useStyle = createStyles(({ css }) => ({
 }));
 
 const PoolListTable: React.FC = () => {
-  const [openAddPoolModal, setOpenAddPoolModal] = useState(false);
-
+  const [openAddPositionModal, setOpenAddPositionModal] = useState(false);
   return (
     <>
       <Table
         title={() => (
           <Flex justify="space-between" align="center">
-            <div>Pool List</div>
+            <div>My Positions</div>
             <Space>
-              <Link href="/positions">
-                <Button>My Positions</Button>
-              </Link>
-              <Button type="primary" onClick={() => setOpenAddPoolModal(true)}>
-                Add Pool
+              <Button
+                type="primary"
+                onClick={() => setOpenAddPositionModal(true)}
+              >
+                Add
               </Button>
             </Space>
           </Flex>
@@ -36,27 +36,27 @@ const PoolListTable: React.FC = () => {
         columns={columns}
         dataSource={data}
       />
-      <AddPoolModal
-        open={openAddPoolModal}
-        onCancel={() => setOpenAddPoolModal(false)}
-        onCreatePool={(createPram: CreatePoolParams) => {
+      <AddPositionModal
+        open={openAddPositionModal}
+        onCancel={() => setOpenAddPositionModal(false)}
+        onCreatePosition={(createPram: CreatePositionParams) => {
           console.log(createPram);
-          setOpenAddPoolModal(false);
+          setOpenAddPositionModal(false);
         }}
       />
     </>
   );
 };
 
-const Pool: React.FC = () => {
+const Positions: React.FC = () => {
   const { styles } = useStyle();
 
   return (
     <div className={styles.pool}>
-      <Typography.Title level={2}>Pool</Typography.Title>
+      <Typography.Title level={2}>Positions</Typography.Title>
       <PoolListTable />
     </div>
   );
 };
 
-export default Pool;
+export default Positions;
