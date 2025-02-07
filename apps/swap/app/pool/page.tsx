@@ -1,11 +1,16 @@
 "use client";
 
-import { Button, Flex, Space, Table, Typography } from "antd";
+import { Button, Flex, message, Space, Table, Typography } from "antd";
 import { createStyles } from "antd-style";
 import Link from "next/link";
-import { columns, data } from "./mockData";
+import { columns } from "./mockData";
 import { useState } from "react";
 import AddPoolModal, { type CreatePoolParams } from "./AddPoolModal";
+import {
+  useReadPoolManagerGetAllPools,
+  useWritePoolManagerCreateAndInitializePoolIfNecessary,
+} from "@/utils/contracts";
+import { getContractAddress } from "@/utils/common";
 
 const useStyle = createStyles(({ css }) => ({
   pool: css`
@@ -16,6 +21,14 @@ const useStyle = createStyles(({ css }) => ({
 
 const PoolListTable: React.FC = () => {
   const [openAddPoolModal, setOpenAddPoolModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { data = [], refetch } = useReadPoolManagerGetAllPools({
+    address: getContractAddress("PoolManager"),
+  });
+
+  console.log(data, "data");
+  const { writeContractAsync } =
+    useWritePoolManagerCreateAndInitializePoolIfNecessary();
 
   return (
     <>
@@ -27,7 +40,11 @@ const PoolListTable: React.FC = () => {
               <Link href="/positions">
                 <Button>My Positions</Button>
               </Link>
-              <Button type="primary" onClick={() => setOpenAddPoolModal(true)}>
+              <Button
+                type="primary"
+                onClick={() => setOpenAddPoolModal(true)}
+                loading={loading}
+              >
                 Add Pool
               </Button>
             </Space>
@@ -39,9 +56,31 @@ const PoolListTable: React.FC = () => {
       <AddPoolModal
         open={openAddPoolModal}
         onCancel={() => setOpenAddPoolModal(false)}
-        onCreatePool={(createPram: CreatePoolParams) => {
-          console.log(createPram);
+        onCreatePool={async (createParams: CreatePoolParams) => {
+          setLoading(true);
           setOpenAddPoolModal(false);
+
+          try {
+            await writeContractAsync({
+              address: getContractAddress("PoolManager"),
+              args: [
+                {
+                  token0: createParams.token0,
+                  token1: createParams.token1,
+                  fee: createParams.fee,
+                  tickLower: createParams.tickLower,
+                  tickUpper: createParams.tickUpper,
+                  sqrtPriceX96: createParams.sqrtPriceX96,
+                },
+              ],
+            });
+            message.success("Create Pool Success If Necessary");
+            refetch();
+          } catch (error: any) {
+            message.error(error.message);
+          } finally {
+            setLoading(false);
+          }
         }}
       />
     </>

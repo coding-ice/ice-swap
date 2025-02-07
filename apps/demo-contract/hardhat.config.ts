@@ -21,7 +21,7 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
-      sepolia: "YOUR_ETHERSCAN_API_KEY", // 替换为你的 Etherscan API Key
+      sepolia: "298FGA5H4S3XD3YEF41AMJV876TAU5BTHH", // 替换为你的 Etherscan API Key
     },
   },
 };

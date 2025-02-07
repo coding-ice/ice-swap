@@ -26,7 +26,7 @@ export default function RootLayout({
           <WagmiWeb3ConfigProvider
             eip6963={{ autoAddInjectedWallets: true }}
             ens
-            chains={[Mainnet, Hardhat]}
+            chains={[Hardhat, Mainnet]}
             wallets={[
               MetaMask(),
               OkxWallet(),
@@ -38,6 +38,7 @@ export default function RootLayout({
             walletConnect={{
               projectId: "c07c0051c2055890eade3556618e38a6",
             }}
+            // transports={[h]}
           >
             <Layout>{children}</Layout>
           </WagmiWeb3ConfigProvider>

@@ -5,6 +5,7 @@ pragma abicoder v2;
 import "./interfaces/IPoolManager.sol";
 import "./Factory.sol";
 import "./interfaces/IPool.sol";
+import "hardhat/console.sol";
 
 contract PoolManager is Factory, IPoolManager {
     Pair[] public pairs;
@@ -50,6 +51,9 @@ contract PoolManager is Factory, IPoolManager {
                 index++;
             }
         }
+
+        console.log("poolsInfo: %s");
+
         return poolsInfo;
     }
 

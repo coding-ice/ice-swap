@@ -1,9 +1,9 @@
 import { parsePriceToSqrtPriceX96 } from "@/utils/common";
-import { Form, Input, InputNumber, Modal, Select } from "antd";
+import { Button, Form, Input, InputNumber, Modal, Select } from "antd";
 
 export interface CreatePoolParams {
-  token0: string;
-  token1: string;
+  token0: `0x${string}`;
+  token1: `0x${string}`;
   fee: number;
   tickLower: number;
   tickUpper: number;
@@ -27,12 +27,17 @@ const AddPoolModal: React.FC<AddPoolModalProps> = (props) => {
       onCancel={onCancel}
       okText="Create"
       onOk={() => {
-        form.validateFields().then((values) => {
-          onCreatePool({
-            ...values,
-            sqrtPriceX96: parsePriceToSqrtPriceX96(values.price),
+        form
+          .validateFields()
+          .then((values) => {
+            onCreatePool({
+              ...values,
+              sqrtPriceX96: parsePriceToSqrtPriceX96(values.price),
+            });
+          })
+          .catch((error) => {
+            console.error(error);
           });
-        });
       }}
     >
       <Form layout="vertical" form={form}>
