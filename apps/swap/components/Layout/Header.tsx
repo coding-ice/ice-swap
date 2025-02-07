@@ -55,13 +55,13 @@ const Header: React.FC = () => {
         </Link>
       </div>
       <div>
-        {/* <Connector
+        <Connector
           modalProps={{
             mode: "simple",
           }}
         >
           <ConnectButton type="text" />
-        </Connector> */}
+        </Connector>
       </div>
     </div>
   );
