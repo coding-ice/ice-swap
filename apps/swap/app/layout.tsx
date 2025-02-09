@@ -13,6 +13,8 @@ import {
 import "./globals.css";
 import Layout from "@/components/Layout";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { hardhat } from "wagmi/chains";
+import { http } from "viem";
 
 export default function RootLayout({
   children,
@@ -38,7 +40,9 @@ export default function RootLayout({
             walletConnect={{
               projectId: "c07c0051c2055890eade3556618e38a6",
             }}
-            // transports={[h]}
+            transports={{
+              [hardhat.id]: http("http://localhost:8545"),
+            }}
           >
             <Layout>{children}</Layout>
           </WagmiWeb3ConfigProvider>

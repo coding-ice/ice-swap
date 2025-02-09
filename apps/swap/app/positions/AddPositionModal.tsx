@@ -1,8 +1,8 @@
 import { Form, Input, InputNumber, Modal } from "antd";
 
 export interface CreatePositionParams {
-  token0: string;
-  token1: string;
+  token0: `0x${string}`;
+  token1: `0x${string}`;
   index: number;
   amount0Desired: bigint;
   amount1Desired: bigint;
